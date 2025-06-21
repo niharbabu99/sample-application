@@ -1,0 +1,19 @@
+---
+platform: linux
+
+inputs:
+- name: source-repo
+
+params:
+  VAULT_TOKEN:
+  VAULT_ADDR:
+  SNYK_TOKEN:
+  VAULT_NAMESPACE:
+  DOCKERHUB_USERNAME:
+  DOCKERHUB_PASSWORD:
+  HARBOR_USERNAME:
+  HARBOR_PASSWORD:
+
+run:
+  path: bash
+  args: [source-repo/ci/tasks/earthly-ci/task.sh]

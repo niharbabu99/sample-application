@@ -1,0 +1,2 @@
+vault_addr: https://vault.1cp.us-west-2.aws.enklavo.com:8200
+vault_namespace: platform/production/services

@@ -1,0 +1,49 @@
+---
+resource_types:
+
+resources:
+  - name: delivery-ci-earthly
+    type: registry-image
+    source:
+      repository: smarshops/delivery-ci-earthly
+  - name: sample-application-ci-cd-poc
+    type: git
+    source:
+      uri: https://((github_access_token))@github.com/Smarsh/sample-application-ci-cd-poc.git
+      branch: main
+    
+
+
+jobs:
+  - name: set-pipeline
+    serial: true
+    plan:
+    - in_parallel:
+      - get: sample-application-ci-cd-poc
+        trigger: true
+    - set_pipeline: earthly-poc-sample-ci
+      file: sample-application-ci-cd-poc/ci/build.yml
+      var_files:
+      - sample-application-ci-cd-poc/ci/vars.yml
+  - name: run-ci
+    plan:
+    - in_parallel:
+      - get: sample-application-ci-cd-poc
+        passed: [set-pipeline]
+        trigger: true
+      - get: delivery-ci-earthly
+    - task: run-earthly-ci
+      privileged: true
+      image: delivery-ci-earthly
+      file: sample-application-ci-cd-poc/ci/tasks/earthly-ci/task.yml
+      input_mapping:
+        source-repo: sample-application-ci-cd-poc
+      params:
+        SNYK_TOKEN: ((snyk_auth_token))
+        VAULT_TOKEN: ((vault_token.token))
+        VAULT_ADDR: ((vault_addr))
+        VAULT_NAMESPACE: ((vault_namespace))
+        DOCKERHUB_USERNAME: ((docker_hub_username))
+        DOCKERHUB_PASSWORD: ((docker_hub_password))
+        HARBOR_USERNAME: ((harbor-project-ep-ci-user-id))
+        HARBOR_PASSWORD: ((harbor-project-ep-ci-user-password))
