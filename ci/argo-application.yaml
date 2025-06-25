@@ -6,16 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/niharbabu99/sample-application
-    targetRevision: HEAD
-    path: ci/helm-values
+    repoURL: ghcr.io
+    chart: niharbabu99/pr-pipeline-chart                      
+    targetRevision: 1.0.0                         
     helm:
-      valueFiles:
-        - values.yaml
-      chart: pr-pipeline-chart
-      oci:
-        registry: ghcr.io/niharbabu99
-        version: 1.0.0
+      values: |
+        {{- (index (fromYaml (get (httpGet "https://raw.githubusercontent.com/niharbabu99/sample-application/main/helm-values/values.yaml")))) | toYaml }}
   destination:
     server: https://kubernetes.default.svc
     namespace: argo
@@ -23,6 +19,4 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
 
