@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pr-pipeline-sample-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/niharbabu99/sample-application
+    targetRevision: HEAD
+    path: ci/helm-values
+    helm:
+      valueFiles:
+        - values.yaml
+      chart: pr-pipeline-chart
+      oci:
+        registry: ghcr.io/niharbabu99
+        version: 1.0.0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
