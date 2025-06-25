@@ -6,15 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: ghcr.io
-    chart: niharbabu99/pr-pipeline-chart                      
-    targetRevision: 1.0.0                         
-    helm:
-      values: |
-        {{- (index (fromYaml (get (httpGet "https://raw.githubusercontent.com/niharbabu99/sample-application/main/helm-values/values.yaml")))) | toYaml }}
+    repoURL: https://github.com/niharbabu99/sample-application
+    targetRevision: main
+    path: ci
   destination:
     server: https://kubernetes.default.svc
-    namespace: argo
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
