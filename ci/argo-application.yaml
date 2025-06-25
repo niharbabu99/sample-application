@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/niharbabu99/sample-application
     targetRevision: main
-    path: ci/*
+    path: ci
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
