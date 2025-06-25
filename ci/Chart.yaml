@@ -1,6 +1,8 @@
 apiVersion: v2
 name: sample-app-pr
 version: 0.1.0
+description: Pr pipeline for sample application
+type: application
 
 dependencies:
   - name: pr-pipeline-chart
