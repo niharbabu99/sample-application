@@ -1,0 +1,9 @@
+apiVersion: v2
+name: sample-app-pr
+version: 0.1.0
+
+dependencies:
+  - name: pr-pipeline-chart
+    version: 1.0.0
+    repository: oci://ghcr.io/niharbabu99
+
