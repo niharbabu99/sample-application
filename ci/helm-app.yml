@@ -7,11 +7,11 @@ spec:
   project: default
   source:
     chart: niharbabu99/pr-pipeline-chart
-    repoURL: https://github.com/niharbabu99/sample-application.git
-    targetRevision: main
+    repoURL: ghcr.io
+    targetRevision: 1.0.0
     helm:
       valueFiles:
-        - ci/helm-values/values.yaml
+        - values.yml
   destination:
     server: https://kubernetes.default.svc
     namespace: argo
