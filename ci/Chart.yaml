@@ -6,6 +6,6 @@ type: application
 
 dependencies:
   - name: pr-pipeline
-    version: 1.0.1
+    version: 1.0.2
     repository: oci://ghcr.io/niharbabu99
 
